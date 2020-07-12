@@ -413,8 +413,8 @@ function! s:line(tabline, inactive) abort
   let [lt, lc, ll] = s:expand(copy(l_))
   let r_ = has_key(s:lightline, mode) ? s:lightline[mode].right : s:lightline.active.right
   let [rt, rc, rl] = s:expand(copy(r_))
+  let _ .= p.right
   for i in range(len(lt))
-    let _ .= p.left
     let _ .= '%#LightlineLeft_' . mode . '_' . ll[i] . '#'
     for j in range(len(lt[i]))
       let x = lc[i][j] ? lt[i][j] : has_key(f, lt[i][j]) ? (exists('*' . f[lt[i][j]]) ? '%{' . f[lt[i][j]] . '()}' : '%{exists("*' . f[lt[i][j]] . '")?' . f[lt[i][j]] . '():""}') : get(c, lt[i][j], '')
@@ -439,6 +439,7 @@ function! s:line(tabline, inactive) abort
       endif
     endfor
   endfor
+  let _ .= p.right
   return _
 endfunction
 
