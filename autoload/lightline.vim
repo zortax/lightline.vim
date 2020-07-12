@@ -275,7 +275,7 @@ function! lightline#highlight(...) abort
     let ls = has_key(get(c, d, {}), 'left') ? c[d].left : has_key(f, d) && has_key(get(c, f[d], {}), 'left') ? c[f[d]].left : c.normal.left
     let ms = has_key(get(c, d, {}), 'middle') ? c[d].middle[0] : has_key(f, d) && has_key(get(c, f[d], {}), 'middle') ? c[f[d]].middle[0] : c.normal.middle[0]
     
-    let border_left_c = has_Key(get(c, d, {}), 'borderleft') ? c[d].borderleft : has_key(f, d) && has_key(get(c, f[d], {}), 'borderleft') ? c[f[d]].borderleft : c.normal.borderleft;
+    let border_left_c = has_key(get(c, d, {}), 'borderleft') ? c[d].borderleft : has_key(f, d) && has_key(get(c, f[d], {}), 'borderleft') ? c[f[d]].borderleft : c.normal.borderleft;
     exec printf('hi LightlineBorder_%s guifg=%s guibg=%s ctermfg=%s ctermbg=%s %s', mode, border_left_c[0], border_left_c[1], border_left_c[2], border_left_c[3], s:term(border_left_c))
 
     let rs = has_key(get(c, d, {}), 'right') ? c[d].right : has_key(f, d) && has_key(get(c, f[d], {}), 'right') ? c[f[d]].right : c.normal.right
