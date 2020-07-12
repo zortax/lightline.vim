@@ -413,6 +413,7 @@ function! s:line(tabline, inactive) abort
   let [lt, lc, ll] = s:expand(copy(l_))
   let r_ = has_key(s:lightline, mode) ? s:lightline[mode].right : s:lightline.active.right
   let [rt, rc, rl] = s:expand(copy(r_))
+  let _ .= '%#LightlineLeft_border'
   let _ .= p.right
   for i in range(len(lt))
     let _ .= '%#LightlineLeft_' . mode . '_' . ll[i] . '#'
