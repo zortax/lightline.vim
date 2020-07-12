@@ -439,7 +439,7 @@ function! s:line(tabline, inactive) abort
       endif
     endfor
   endfor
-  let _ .= p.right
+  let _ .= p.left
   return _
 endfunction
 
