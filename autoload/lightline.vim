@@ -1,4 +1,4 @@
- =============================================================================
+
 " Filename: autoload/lightline.vim
 " Author: itchyny
 " License: MIT License
@@ -239,6 +239,8 @@ function! lightline#link(...) abort
     endfor
   endfor
   exec printf('hi link LightlineMiddle_active LightlineMiddle_%s', mode)
+  exec printf('hi link LightlineBorderleft_active LightlineBorderleft_%s', mode)
+  exec printf('hi link LightlineBorderright_active LightlineBorderright_%s', mode)
   return ''
 endfunction
 
@@ -275,8 +277,16 @@ function! lightline#highlight(...) abort
     let ls = has_key(get(c, d, {}), 'left') ? c[d].left : has_key(f, d) && has_key(get(c, f[d], {}), 'left') ? c[f[d]].left : c.normal.left
     let ms = has_key(get(c, d, {}), 'middle') ? c[d].middle[0] : has_key(f, d) && has_key(get(c, f[d], {}), 'middle') ? c[f[d]].middle[0] : c.normal.middle[0]
     
-    let border_left_c = has_key(get(c, d, {}), 'borderleft') ? c[d].borderleft : has_key(f, d) && has_key(get(c, f[d], {}), 'borderleft') ? c[f[d]].borderleft : c.normal.borderleft;
-    exec printf('hi LightlineBorder_%s guifg=%s guibg=%s ctermfg=%s ctermbg=%s %s', mode, border_left_c[0], border_left_c[1], border_left_c[2], border_left_c[3], s:term(border_left_c))
+    let border_left_c = has_key(get(c, d, {}), 'borderleft') ? c[d].borderleft[0] : has_key(f, d) && has_key(get(c, f[d], {}), 'borderleft') ? c[f[d]].borderleft[0] : c.normal.borderleft[0]
+    
+    let border_right_c = has_key(get(c, d, {}), 'borderright') ? c[d].borderright[0] : has_key(f, d) && has_key(get(c, f[d], {}), 'borderright') ? c[f[d]].borderright[0] : c.normal.borderright[0]
+ 
+
+    exec printf('hi LightlineBorderleft_%s guifg=%s guibg=%s ctermfg=%s ctermbg=%s %s', mode, border_left_c[0], border_left_c[1], border_left_c[2], border_left_c[3], s:term(border_left_c))
+    
+    exec printf('hi LightlineBorderright_%s guifg=%s guibg=%s ctermfg=%s ctermbg=%s %s', mode, border_right_c[0], border_right_c[1], border_right_c[2], border_right_c[3], s:term(border_right_c))
+
+
 
     let rs = has_key(get(c, d, {}), 'right') ? c[d].right : has_key(f, d) && has_key(get(c, f[d], {}), 'right') ? c[f[d]].right : c.normal.right
     for [p, l, zs] in [['Left', len(left), ls], ['Right', len(right), rs]]
@@ -417,7 +427,7 @@ function! s:line(tabline, inactive) abort
   let [lt, lc, ll] = s:expand(copy(l_))
   let r_ = has_key(s:lightline, mode) ? s:lightline[mode].right : s:lightline.active.right
   let [rt, rc, rl] = s:expand(copy(r_))
-  let _ .= '%#LightlineLeft_' . mode . '_' . s:lightline[mode].borderleft[0] . '#'
+  let _ .= '%#LightlineBorderleft_' . mode . '#'
   let _ .= p.right
   for i in range(len(lt))
     let _ .= '%#LightlineLeft_' . mode . '_' . ll[i] . '#'
@@ -444,6 +454,7 @@ function! s:line(tabline, inactive) abort
       endif
     endfor
   endfor
+  let _ .= '%#LightlineBorderright_' . lightline#mode() . '#'
   let _ .= p.left
   return _
 endfunction
